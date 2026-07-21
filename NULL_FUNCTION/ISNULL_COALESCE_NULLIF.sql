@@ -12,8 +12,8 @@ go
 select 
 CustomerID,
 score,
-AVG(score) OVER() avgscore,
-AVG(ISNULL(score,0)) OVER() avgscore
+--AVG(score) OVER() avgscore,
+AVG(ISNULL(score,0)) OVER() avgscore2 
 from Sales.Customers
 
 --2.mathematical operation
@@ -39,6 +39,7 @@ from Sales.Customers
 select 
 CustomerID,
 Score
+--CASE WHEN Score IS NULL THEN 1 ELSE 0 END flag
 from Sales.Customers
 order by CASE WHEN Score IS NULL THEN 1 ELSE 0 END ,Score
 
