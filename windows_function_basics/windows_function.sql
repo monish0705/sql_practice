@@ -25,3 +25,24 @@ group by ProductID
  from Sales.Orders
 
  --here we cannot use group by function so we are using window function over()
+
+
+ select
+ OrderID,
+ OrderDate,
+ OrderStatus,
+ Sales,
+ sum(Sales) over(partition by OrderStatus Order by OrderDate
+ rows between current row and 2 following) totalsales
+ from Sales.Orders
+
+
+ -- default frame clause : rows between unbounded preceding and current row
+
+ select
+ OrderID,
+ OrderDate,
+ OrderStatus,
+ Sales,
+ sum(Sales) over(partition by OrderStatus Order by OrderDate) totalsales
+ from Sales.Orders
