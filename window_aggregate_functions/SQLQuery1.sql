@@ -26,3 +26,23 @@ Score,
 count(*) over() totalcusto,
 count(Score) over() totalscore
 from Sales.Customers
+
+--check whether table order conatins any duplicates row
+
+select 
+OrderID,
+count(*) over(partition by OrderID) checkdup
+from Sales.Orders
+
+
+
+--identify duplicates rows to improve the data quality.
+select 
+*
+from(
+	select 
+	OrderID,
+	count(*) over(partition by OrderID) checkpk
+	from Sales.OrdersArchive
+	)t where checkpk > 1
+
