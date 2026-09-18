@@ -104,5 +104,17 @@ FROM Sales.Orders;
 --percentage based ranking
 
 --CUME_DIST
-
-
+--Find Products that Fall Within the Highest 40% of the Prices
+select 
+Product,
+Price,
+DistRank,
+concat(DistRank *100 ,'%' ) as DistperRank
+from(
+SELECT
+        Product,
+        Price,
+        CUME_DIST() OVER (ORDER BY Price DESC) AS DistRank
+    FROM Sales.Products
+    )AS PriceDistribution 
+    where DistRank <= 0.4
